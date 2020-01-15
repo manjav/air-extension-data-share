@@ -2,7 +2,9 @@
 bin-debug/
 bin-release/
 [Oo]bj/
+[Dd]ist/
 [Bb]in/
+[C]ert/
 
 # Other files and folders
 .settings/
