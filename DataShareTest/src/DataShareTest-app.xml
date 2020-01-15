@@ -292,6 +292,7 @@
 					together in order to use AIR's NetworkInfo APIs-->
 			    <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>-->
 			    <!--<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>-->
+				<activity android:name="com.gerantech.extensions.activities.PermissionsActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" android:windowSoftInputMode="stateHidden|adjustResize" />
 			</manifest>
 			
 		]]></manifestAdditions>
@@ -309,6 +310,7 @@
 
 <extensions>
         
+<extensionID>com.gerantech.extensions.nativeabilities</extensionID>
 <extensionID>adobe.nativeExtension.dataShare</extensionID>
 </extensions>
 </application>

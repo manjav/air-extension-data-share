@@ -1,5 +1,8 @@
-package
-{
+package {
+
+	import com.adobe.DataShareLibrary.DataShare;
+	import com.gerantech.extensions.NativeAbilities;
+	import com.gerantech.extensions.events.AndroidEvent;
 
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -11,73 +14,67 @@ package
 	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
 	import flash.text.TextField;
-	import com.adobe.DataShareLibrary.DataShare;	
 
-	public class DataShareTest extends Sprite
-	{
-		private var button_txt:Sprite = new Sprite();
-		private var button_attach:Sprite = new Sprite();
+	public class DataShareTest extends Sprite {
+		private var button_img:Sprite = new Sprite();
+		private var button_text:Sprite = new Sprite();
 		private var button_sendsms:Sprite = new Sprite();
 		private var bitmap:Bitmap;
 		private var bitmapData:BitmapData;
 
-		public function DataShareTest()
-		{
+		public function DataShareTest() {
 			super();
 			drawButtonForShareImage()
 			drawButtonToSendData();
 			drawButtonToSendMessage();
-			
 
-			
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onComplete);
-			loader.load(new URLRequest("adobe.gif"));
-			
-			function onComplete (event:Event):void
-			{
+			loader.load(new URLRequest("assets/adobe.gif"));
+			function onComplete(event:Event):void {
 				bitmapData = event.target.content.bitmapData;
 			}
 			bitmap = new Bitmap(bitmapData);
-			
-			
-			addChild(button_txt);
-			addChild(button_attach);
+
+			addChild(button_img);
+			addChild(button_text);
 			addChild(button_sendsms);
-			
-			button_txt.addEventListener(MouseEvent.MOUSE_DOWN, imageHandler);
-			button_attach.addEventListener(MouseEvent.MOUSE_DOWN, textHandler);
+
+			button_img.addEventListener(MouseEvent.MOUSE_DOWN, imageHandler);
+			button_text.addEventListener(MouseEvent.MOUSE_DOWN, textHandler);
 			button_sendsms.addEventListener(MouseEvent.MOUSE_DOWN, msgHandler);
 
 			// support autoOrients
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 		}
-		
+
 		private function drawButtonForShareImage():void {
 			var textLabel:TextField = new TextField()
-			button_txt.graphics.clear();
-			button_txt.graphics.beginFill(0xD4D4D4); // grey color
-			button_txt.graphics.drawRoundRect(150, 100, 150, 150, 10, 10); // x, y, width, height, ellipseW, ellipseH
-			button_txt.graphics.endFill();
+			button_img.graphics.clear();
+			button_img.graphics.beginFill(0xD4D4D4); // grey color
+			button_img.graphics.drawRoundRect(150, 100, 150, 150, 10, 10); // x, y, width, height, ellipseW, ellipseH
+			button_img.graphics.endFill();
 			textLabel.text = "Share Image";
 			textLabel.x = 170;
 			textLabel.y = 120;
 			textLabel.selectable = false;
-			button_txt.addChild(textLabel)
+			button_img.addChild(textLabel)
 		}
+
 		private function drawButtonToSendData():void {
 			var textLabel:TextField = new TextField()
-			button_attach.graphics.clear();
-			button_attach.graphics.beginFill(0xD4D4D4); // grey color
-			button_attach.graphics.drawRoundRect(150, 300, 150, 150, 10, 10); // x, y, width, height, ellipseW, ellipseH
-			button_attach.graphics.endFill();
+			button_text.graphics.clear();
+			button_text.graphics.beginFill(0xD4D4D4); // grey color
+			button_text.graphics.drawRoundRect(150, 300, 150, 150, 10, 10); // x, y, width, height, ellipseW, ellipseH
+			button_text.graphics.endFill();
 			textLabel.text = "Send Data";
 			textLabel.x = 170;
 			textLabel.y = 320;
 			textLabel.selectable = false;
-			button_attach.addChild(textLabel)
+			button_text.addChild(textLabel)
 		}
+
 		private function drawButtonToSendMessage():void {
 			var textLabel:TextField = new TextField()
 			button_sendsms.graphics.clear();
@@ -90,30 +87,41 @@ package
 			textLabel.selectable = false;
 			button_sendsms.addChild(textLabel)
 		}
-		
-		private function imageHandler(event:MouseEvent):void {		
-			var img_share:DataShare = new DataShare();		// Create object of DataShare class
-			img_share.showToast("Attaching Image...");
-			var email_id:String = new String();
-			email_id="adobeairnoida@gmail.com,test@gmail.com";
-			img_share.shareImage(bitmapData,"Sharing some doc","Please find the attachment",email_id);
 
+		private function imageHandler(event:MouseEvent):void {
+
+			NativeAbilities.instance.addEventListener(AndroidEvent.PERMISSION_REQUEST, nativeAbilities_requestPermissionHandler);
+			if( NativeAbilities.instance.requestPermission("android.permission.WRITE_EXTERNAL_STORAGE", 1361) )
+				shareImage();
 		}
+		private function nativeAbilities_requestPermissionHandler(event:Object):void
+		{
+			NativeAbilities.instance.removeEventListener(AndroidEvent.PERMISSION_REQUEST , nativeAbilities_requestPermissionHandler);
+			if( String(event.data).search("WRITE_EXTERNAL_STORAGE") > -1 )
+				shareImage();
+		}
+
 		private function textHandler(event:MouseEvent):void {
 			var txt_share:DataShare = new DataShare();
 			txt_share.showToast("Please share some Feedback to us...");
 			var userid:String = new String();
-			userid="adobeairnoida@gmail.com,test@gmail.com";
-			txt_share.sendData("Your Feedback is Valuable to us","Write something here..",userid);
-			
+			userid = "adobeairnoida@gmail.com,test@gmail.com";
+			txt_share.sendData("Your Feedback is Valuable to us", "Write something here..", userid);
 		}
+
 		private function msgHandler(event:MouseEvent):void {
 			var msg_share:DataShare = new DataShare();
 			msg_share.showToast("Sending Message..");
-			msg_share.sendMessage("Heyy, How are you?","12345678");
-			
-			
+			msg_share.sendMessage("Heyy, How are you?", "12345678");
 		}
-		
+
+		private function shareImage():void
+		{
+			var img_share:DataShare = new DataShare(); // Create object of DataShare class
+			img_share.showToast("Attaching Image...");
+			var email_id:String = new String();
+			email_id = "adobeairnoida@gmail.com,test@gmail.com";
+			img_share.shareImage(bitmapData, "Sharing some doc", "Please find the attachment", email_id);
+		}
 	}
 }
