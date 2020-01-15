@@ -1,0 +1,25 @@
+{
+  // Use IntelliSense to learn about possible SWF debug attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "swf",
+      "request": "launch",
+      "name": "Launch SWF",
+      // "profile": "mobileDevice",
+      "screensize": "680x1200:680x1200",
+      "screenDPI": 326,
+      "versionPlatform": "AND",
+      "extdir": "bin/.as3mxml-unpackaged-anes"
+    },
+    {
+      "type": "swf",
+      "request": "attach",
+      "name": "Install & Attach Adobe AIR (Android)",
+      "connect": true,
+      "platform": "android"
+    }
+  ]
+}

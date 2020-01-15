@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application xmlns="http://ns.adobe.com/air/application/32.0">
+	<id>__APPID__</id>
+	<name>__APPNAME__</name>
+	<filename>__APPNAME__</filename>
+	<versionNumber>__VERID__</versionNumber>
+	<versionLabel>__VERLABEL__</versionLabel>
+	<description>__DESCRIPTION__</description>
+  <initialWindow>
+    <visible>true</visible>
+    <title>__APPNAME__</title>
+    <content>release.swf</content>
+    <fullScreen>true</fullScreen>
+    <renderMode>direct</renderMode>
+    <aspectRatio>portrait</aspectRatio>
+    <autoOrients>false</autoOrients>
+    <depthAndStencil>true</depthAndStencil>
+  </initialWindow>
+	<icon>__ICONS__</icon>
+  <android>
+    <manifestAdditions><![CDATA[<manifest android:installLocation="auto">
+
+	<!-- In APP Billing permissions -->
+	<uses-permission android:name="com.domain.market.BILLING" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<!--<uses-permission android:name="android.permission.READ_PHONE_STATE" /> -->
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<application>
+		<activity android:excludeFromRecents="false">
+		  <intent-filter>
+			<action android:name="android.intent.action.MAIN"/>
+			<category android:name="android.intent.category.LAUNCHER"/>
+			<category android:name="tv.ouya.intent.category.GAME" />
+		  </intent-filter>
+		  <intent-filter>
+			<action android:name="android.intent.action.VIEW"/>
+			<category android:name="android.intent.category.BROWSABLE"/>
+			<category android:name="android.intent.category.DEFAULT"/>
+			<data android:scheme="test"/>
+		  </intent-filter>
+		</activity>
+		<activity android:name="com.gerantech.extensions.activities.PermissionsActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" android:windowSoftInputMode="stateHidden|adjustResize" />
+	</application>
+	
+</manifest>
+]]></manifestAdditions>
+  </android>
+  <iPhone>
+    <InfoAdditions><![CDATA[<key>UIStatusBarStyle</key>
+<string>UIStatusBarStyleBlackOpaque</string>
+<key>UIRequiresPersistentWiFi</key>
+<string>NO</string>
+<key>UIApplicationExitsOnSuspend</key>
+<true />
+<key>UIDeviceFamily</key>
+<array>
+	<string>1</string>
+</array>]]></InfoAdditions>
+    <requestedDisplayResolution>high</requestedDisplayResolution>
+  </iPhone>
+  <extensions>
+		<extensionID>com.gerantech.extensions.nativeabilities</extensionID>
+		<extensionID>adobe.nativeExtension.dataShare</extensionID>
+  </extensions>
+</application>
