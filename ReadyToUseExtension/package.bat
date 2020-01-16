@@ -1,2 +1,0 @@
-REM echo f | xcopy /f /y ..\native_abilities_android\app\build\intermediates\packaged-classes\release\classes.jar android\
-adt -package -storetype pkcs12 -keystore cert.p12 -storepass 111111 -target ane "DataShare.ane" extension.xml -swc DataShareLibrary.swc -platform Android-ARM -C android . -platform Android-ARM64 -C android . -platform Android-x86 -C android . -platform iPhone-ARM -C ios . -platform iPhone-x86 -C ios . -platform default -C default . && echo f | xcopy /f /y DataShare.ane ..\DataShareTest\exts\
