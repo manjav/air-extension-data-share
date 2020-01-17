@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application xmlns="http://ns.adobe.com/air/application/32.0">
+	<id>__APPID__</id>
+	<name>__APPNAME__</name>
+	<filename>__APPNAME__</filename>
+	<versionNumber>__VERID__</versionNumber>
+	<versionLabel>__VERLABEL__</versionLabel>
+	<description>__DESCRIPTION__</description>
+  <initialWindow>
+    <visible>true</visible>
+    <title>__APPNAME__</title>
+    <content>release.swf</content>
+    <fullScreen>true</fullScreen>
+    <renderMode>direct</renderMode>
+    <aspectRatio>portrait</aspectRatio>
+    <autoOrients>false</autoOrients>
+    <depthAndStencil>true</depthAndStencil>
+  </initialWindow>
+	<icon>__ICONS__</icon>
+  <android>
+    <manifestAdditions><![CDATA[<manifest android:installLocation="auto">
+
+	<!-- In APP Billing permissions -->
+	<uses-permission android:name="com.domain.market.BILLING" />
+	<uses-permission android:name="android.permission.INTERNET" />
+</manifest>
+]]></manifestAdditions>
+  </android>
+  <iPhone>
+    <InfoAdditions><![CDATA[<key>UIStatusBarStyle</key>
+<string>UIStatusBarStyleBlackOpaque</string>
+<key>UIRequiresPersistentWiFi</key>
+<string>NO</string>
+<key>UIApplicationExitsOnSuspend</key>
+<true />
+<key>UIDeviceFamily</key>
+<array>
+	<string>1</string>
+</array>]]></InfoAdditions>
+    <requestedDisplayResolution>high</requestedDisplayResolution>
+  </iPhone>
+  <extensions>
+		<extensionID>com.marpies.ane.androidsupport</extensionID>
+  </extensions>
+</application>
