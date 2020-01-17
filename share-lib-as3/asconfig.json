@@ -1,0 +1,15 @@
+{
+	"type": "lib",
+	"config": "airmobile",
+	"compilerOptions": {
+		"swf-version": 37,
+		"output": "bin/share.swc",
+		"source-path": [
+			"src"
+		],
+		"library-path": [],
+		"include-sources": [
+			"src"
+		]
+	}
+}
