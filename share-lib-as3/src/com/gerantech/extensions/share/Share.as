@@ -1,4 +1,5 @@
-package com.gerantech.extensions.share {
+package com.gerantech.extensions.share
+{
 	import flash.display.BitmapData;
 	import flash.external.ExtensionContext;
 	import flash.system.Capabilities;
@@ -42,5 +43,16 @@ package com.gerantech.extensions.share {
 			extContext.call("shareTextFunction", userId, subject, text);
 		}
 
+		public function shareImage(bitmap:BitmapData, subject:String = "", text:String = "", userId:String = ""):void
+		{
+			extContext.call("shareImageFunction", bitmap, userId, subject, text);
+		}
+		
+		public function encode(bitmapData:BitmapData, url:String, compression:Number = 1):void
+		{
+			if( isIOS )
+				return;
+			extContext.call("encodeFunction", bitmapData.getPixels(bitmapData.rect), bitmapData.width, bitmapData.height, url, compression);
+		}
 	}
 }

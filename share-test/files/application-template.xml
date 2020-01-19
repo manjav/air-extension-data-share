@@ -41,5 +41,6 @@
   </iPhone>
   <extensions>
 		<extensionID>com.marpies.ane.androidsupport</extensionID>
+		<extensionID>com.gerantech.extensions.share</extensionID>
   </extensions>
 </application>

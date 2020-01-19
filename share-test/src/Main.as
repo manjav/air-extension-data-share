@@ -43,20 +43,13 @@ package {
 			btn.graphics.beginFill(0xD4D4D4); // grey color
 			btn.graphics.drawRoundRect(0, 0, 150, 150, 10, 10); // x, y, width, height, ellipseW, ellipseH
 			btn.graphics.endFill();
-			btn.addEventListener(MouseEvent.MOUSE_DOWN, imageHandler);
+			btn.addEventListener(MouseEvent.MOUSE_DOWN, handler);
 			this.addChild(btn);
 
 			var textLabel:TextField = new TextField()
 			textLabel.selectable = false;
 			textLabel.text = label;
 			btn.addChild(textLabel);
-		}
-
-		private function imageHandler(event:MouseEvent):void {
-			shareImage();
-		}
-		private function shareImage():void
-		{
 		}
 
 		private function encodeHandler(event:MouseEvent):void
@@ -75,5 +68,12 @@ package {
 			var emails:String = "adobeairnoida@gmail.com,test@gmail.com";
 			Share.instance.sendText("Your Feedback is Valuable to us", "Write something here..", emails);
 		}
+
+		private function imageHandler(event:MouseEvent):void {
+			Share.instance.showToast("Sending Image...");
+			var emails:String = "adobeairnoida@gmail.com,test@gmail.com";
+			Share.instance.shareImage(this.bitmapData, "Sharing some doc", "Please find the attachment", emails);
+		}
+
 	}
 }

@@ -1,0 +1,11 @@
+<platform xmlns="http://ns.adobe.com/air/extension/4.0">
+	<packagedDependencies>
+		<packagedDependency>tv-screensharing-sdk.jar</packagedDependency>
+	</packagedDependencies>
+	<packagedResources>
+		<packagedResource>
+			<packageName>com.gerantech.extensions.share</packageName>
+			<folderName>com.gerantech.extensions.share-res</folderName>
+		</packagedResource>
+	</packagedResources>
+</platform>
