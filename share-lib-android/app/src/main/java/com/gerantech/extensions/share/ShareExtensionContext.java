@@ -28,6 +28,7 @@ public class ShareExtensionContext extends FREContext {
 
 		Map<String, FREFunction> functionMap = new HashMap<String, FREFunction>();
 		functionMap.put("showToastFunction", new ShowToastFunction());
+		functionMap.put("sendMessageFunction", new SendMessageFunction());
 		return functionMap;
 	}
 }

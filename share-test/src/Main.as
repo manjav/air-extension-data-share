@@ -9,6 +9,7 @@ package {
 	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
 	import flash.text.TextField;
+	import com.gerantech.extensions.share.Share;
 
 	public class Main extends Sprite {
 		private var button_img:Sprite = new Sprite();
@@ -66,6 +67,8 @@ package {
 		}
 
 		private function msgHandler(event:MouseEvent):void {
+			Share.instance.showToast("Sending Message...");
+			Share.instance.sendMessage("Heyy, How are you?", "+989121778856");
 		}
 	}
 }

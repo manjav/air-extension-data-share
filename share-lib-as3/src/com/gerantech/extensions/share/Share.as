@@ -29,5 +29,13 @@ package com.gerantech.extensions.share {
 			extContext.call("showToastFunction", message, duration);
 		}
 
+		public function sendMessage(message:String = "", phoneNumber:String = ""):void
+		{
+			if(isIOS)
+				extContext.call("shareTextFunction", phoneNumber, "", message);
+			else
+				extContext.call("sendMessageFunction", phoneNumber, message);
+		}
+
 	}
 }
