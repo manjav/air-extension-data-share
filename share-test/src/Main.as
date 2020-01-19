@@ -23,10 +23,10 @@ package {
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 
-			addButton("Share Image", 50, 50, imageHandler);
-			addButton("Encode Image", 250, 50, encodeHandler);
-			addButton("Send Text", 50, 250, textHandler);
-			addButton("Send Message", 50, 450, msgHandler);
+			this.addButton("Share Image", 50, 50, imageHandler);
+			this.addButton("Encode Image", 250, 50, encodeHandler);
+			this.addButton("Send Text", 50, 250, textHandler);
+			this.addButton("Send Message", 50, 450, msgHandler);
 
 			var loader:Loader = new Loader();
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onComplete);
@@ -44,7 +44,7 @@ package {
 			btn.graphics.drawRoundRect(0, 0, 150, 150, 10, 10); // x, y, width, height, ellipseW, ellipseH
 			btn.graphics.endFill();
 			btn.addEventListener(MouseEvent.MOUSE_DOWN, imageHandler);
-			addChild(btn);
+			this.addChild(btn);
 
 			var textLabel:TextField = new TextField()
 			textLabel.selectable = false;
@@ -63,12 +63,17 @@ package {
 		{
 		}
 
-		private function textHandler(event:MouseEvent):void {
-		}
-
-		private function msgHandler(event:MouseEvent):void {
+		private function msgHandler(event:MouseEvent):void
+		{
 			Share.instance.showToast("Sending Message...");
 			Share.instance.sendMessage("Heyy, How are you?", "+989121778856");
+		}
+
+		private function textHandler(event:MouseEvent):void
+		{
+			Share.instance.showToast("Please share some Feedback to us...");
+			var emails:String = "adobeairnoida@gmail.com,test@gmail.com";
+			Share.instance.sendText("Your Feedback is Valuable to us", "Write something here..", emails);
 		}
 	}
 }

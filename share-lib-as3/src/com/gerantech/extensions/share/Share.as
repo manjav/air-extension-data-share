@@ -37,5 +37,10 @@ package com.gerantech.extensions.share {
 				extContext.call("sendMessageFunction", phoneNumber, message);
 		}
 
+		public function sendText(subject:String = "", text:String = "", userId:String = ""):void
+		{
+			extContext.call("shareTextFunction", userId, subject, text);
+		}
+
 	}
 }
