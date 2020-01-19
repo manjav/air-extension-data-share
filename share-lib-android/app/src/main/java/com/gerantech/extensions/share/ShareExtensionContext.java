@@ -27,6 +27,7 @@ public class ShareExtensionContext extends FREContext {
 		Log.i(ShareExtension.TAG, "context getFunctions");
 
 		Map<String, FREFunction> functionMap = new HashMap<String, FREFunction>();
+		functionMap.put("showToastFunction", new ShowToastFunction());
 		return functionMap;
 	}
 }

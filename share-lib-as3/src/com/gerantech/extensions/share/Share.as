@@ -24,5 +24,10 @@ package com.gerantech.extensions.share {
 			extContext = ExtensionContext.createExtensionContext("com.gerantech.extensions.share", null);
 		}
 
+		public function showToast(message:String, duration:int = 2):void
+		{
+			extContext.call("showToastFunction", message, duration);
+		}
+
 	}
 }
