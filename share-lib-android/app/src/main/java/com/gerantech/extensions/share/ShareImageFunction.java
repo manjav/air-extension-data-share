@@ -20,7 +20,7 @@ import java.util.Collections;
 //The passedArgs array in call() contains arguments for user id, subject, text and Image Attachment.
 public class ShareImageFunction implements FREFunction {
 
-	Activity activity;
+  Activity activity;
 
   @Override
 	public FREObject call(FREContext context, FREObject[] args) {
@@ -29,15 +29,7 @@ public class ShareImageFunction implements FREFunction {
 		activity = ExtContext.getActivity();
 
 		try {
-			FREBitmapData bitmapData= (FREBitmapData) args[0];
-
-			bitmapData.acquire();
-			Log.i(ShareExtension.TAG, bitmapData.getWidth()+ " " + bitmapData.getHeight() + " " + bitmapData.getBits());
-
-			// create java bitmap from as3 bitmapData
-			Bitmap bmp = Bitmap.createBitmap(bitmapData.getWidth(), bitmapData.getHeight(), Bitmap.Config.ARGB_8888);
-			bmp.copyPixelsFromBuffer(bitmapData.getBits());
-			bitmapData.release();
+			Bitmap bmp = EncodeImageFunction.getBitmap((FREBitmapData) args[0]);
 
 			Log.i(ShareExtension.TAG, bmp.getWidth()+ " : " + bmp.getHeight());
 
@@ -56,7 +48,7 @@ public class ShareImageFunction implements FREFunction {
 			// Second Argument is for the user ids
 			FREObject user = args[1];
 			String userId = user.getAsString();
-			ArrayList<String> idList = new ArrayList<String>();
+			ArrayList<String> idList = new ArrayList<>();
 			Collections.addAll(idList, userId.split(","));
 
 			// Third Argument is for the Subject parameter

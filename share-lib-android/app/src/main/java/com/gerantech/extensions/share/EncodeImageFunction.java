@@ -53,6 +53,25 @@ public class EncodeImageFunction implements FREFunction {
 		Log.i(ShareExtension.TAG, e.getMessage());
 		e.printStackTrace();
 	}
+
 	return null;
   }
+
+  static Bitmap getBitmap(FREBitmapData bitmapData)
+  {
+	  Bitmap bmp = null;
+	  try {
+		  bitmapData.acquire();
+//		  Log.i(ShareExtension.TAG, bitmapData.getWidth()+ " " + bitmapData.getHeight() + " " + bitmapData.getBits());
+
+		  // create java bitmap from as3 bitmapData
+		  bmp = Bitmap.createBitmap(bitmapData.getWidth(), bitmapData.getHeight(), Bitmap.Config.ARGB_8888);
+		  bmp.copyPixelsFromBuffer(bitmapData.getBits());
+		  bitmapData.release();
+	  } catch (Exception e) {
+		  e.printStackTrace();
+	  }
+	  return bmp;
+  }
+
 }
