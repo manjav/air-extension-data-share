@@ -1,6 +1,10 @@
 package com.gerantech.extensions.share;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
 import android.util.Log;
 
 import com.adobe.fre.FREBitmapData;
@@ -9,7 +13,6 @@ import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
 
 import java.io.FileOutputStream;
-import java.nio.ByteBuffer;
 
 //The purpose of this class to share the Image and text data through the Applications installed on user device.
 //The passedArgs array in call() contains arguments for user id, subject, text and Image Attachment.
@@ -48,39 +51,38 @@ public class EncodeImageFunction implements FREFunction {
 		e.printStackTrace();
 	}
 
-	  return null;
+	return null;
   }
 
-  static Bitmap getBitmap(FREBitmapData bitmapData)
+	private static final float[] mBGRToRGBColorTransform =
+	{
+		0, 0, 1f, 0, 0,
+		0, 1f, 0, 0, 0,
+		1f, 0, 0, 0, 0,
+		0, 0, 0, 1f, 0
+	};
+	private static final ColorMatrixColorFilter mColorFilter = new ColorMatrixColorFilter(
+			new ColorMatrix( mBGRToRGBColorTransform )
+	);
+
+	static Bitmap getBitmap(FREBitmapData bitmapData)
   {
-	  Bitmap bmp = null;
+	  Bitmap bitmap = null;
 	  try {
 		  bitmapData.acquire();
+		  bitmap = Bitmap.createBitmap(bitmapData.getWidth(), bitmapData.getHeight(), Bitmap.Config.ARGB_8888);
 
-		  // convert ARGB to ARGB
-		  int len = bitmapData.getWidth() * bitmapData.getHeight();
-		  ByteBuffer buffer = bitmapData.getBits();
-		  ByteBuffer newBuffer = ByteBuffer.allocate(len * 4);
-		  for (int i = 0; i < len; i++) {
-			  byte r = buffer.get();
-			  byte g = buffer.get();
-			  byte b = buffer.get();
-			  newBuffer.put(buffer.get());
-			  newBuffer.put(b);
-			  newBuffer.put(g);
-			  newBuffer.put(r);
-		  }
-		  newBuffer.rewind();
-
-		  // create java bitmap from as3 bitmapData
-		  bmp = Bitmap.createBitmap(bitmapData.getWidth(), bitmapData.getHeight(), Bitmap.Config.ARGB_8888);
-		  bmp.copyPixelsFromBuffer(newBuffer);
+		  Canvas canvas = new Canvas( bitmap );
+		  Paint paint = new Paint();
+		  paint.setColorFilter( mColorFilter );
+		  bitmap.copyPixelsFromBuffer( bitmapData.getBits() );
 		  bitmapData.release();
-			
+		  canvas.drawBitmap( bitmap, 0, 0, paint );
+
 	  } catch (Exception e) {
 		  e.printStackTrace();
 	  }
-	  return bmp;
+	  return bitmap;
   }
 
 }
