@@ -52,7 +52,7 @@ package com.gerantech.extensions.share
 		{
 			if( isIOS )
 				return;
-			extContext.call("encodeFunction", bitmapData.getPixels(bitmapData.rect), bitmapData.width, bitmapData.height, url, compression);
+			extContext.call("encodeImageFunction", bitmapData.getPixels(bitmapData.rect), bitmapData.width, bitmapData.height, url, compression);
 		}
 	}
 }

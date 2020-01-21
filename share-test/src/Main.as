@@ -10,6 +10,7 @@ package {
 	import flash.net.URLRequest;
 	import flash.text.TextField;
 	import com.gerantech.extensions.share.Share;
+	import flash.filesystem.File;
 
 	public class Main extends Sprite {
 		private var button_img:Sprite = new Sprite();
@@ -52,10 +53,6 @@ package {
 			btn.addChild(textLabel);
 		}
 
-		private function encodeHandler(event:MouseEvent):void
-		{
-		}
-
 		private function msgHandler(event:MouseEvent):void
 		{
 			Share.instance.showToast("Sending Message...");
@@ -75,5 +72,10 @@ package {
 			Share.instance.shareImage(this.bitmapData, "Sharing some doc", "Please find the attachment", emails);
 		}
 
+		private function encodeHandler(event:MouseEvent):void
+		{
+			Share.instance.showToast("Encoding Image...");
+			Share.instance.encode(this.bitmapData, File.documentsDirectory.resolvePath("encoded.png").nativePath, 1);
+		}
 	}
 }

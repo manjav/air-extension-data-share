@@ -31,6 +31,7 @@ public class ShareExtensionContext extends FREContext {
 		functionMap.put("sendMessageFunction", new SendMessageFunction());
 		functionMap.put("shareTextFunction", new ShareTextFunction());
 		functionMap.put("shareImageFunction", new ShareImageFunction());
+		functionMap.put("encodeImageFunction", new EncodeImageFunction());
 		return functionMap;
 	}
 }
