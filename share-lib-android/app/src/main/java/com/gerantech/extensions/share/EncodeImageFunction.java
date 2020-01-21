@@ -18,14 +18,8 @@ public class EncodeImageFunction implements FREFunction {
   public FREObject call(FREContext context, FREObject[] args) {
 
 	try {
-		FREBitmapData bitmapData = (FREBitmapData) args[0];
-		bitmapData.acquire();
-//		Log.i(ShareExtension.TAG, bitmapData.getWidth()+ " " + bitmapData.getHeight() + " " + bitmapData.getBits());
-
-		// create java bitmap from as3 bitmapData
-		Bitmap bmp = Bitmap.createBitmap(bitmapData.getWidth(), bitmapData.getHeight(), Bitmap.Config.ARGB_8888);
-		bmp.copyPixelsFromBuffer(bitmapData.getBits());
-		bitmapData.release();
+		// create bitmap from bitmapData
+		Bitmap bmp = EncodeImageFunction.getBitmap((FREBitmapData) args[0]);
 		Log.i(ShareExtension.TAG, bmp.getWidth()+ " : " + bmp.getHeight());
 
 		// define image format
@@ -41,7 +35,6 @@ public class EncodeImageFunction implements FREFunction {
 			format = Bitmap.CompressFormat.JPEG;
 		}
 
-		Log.i(ShareExtension.TAG, path + " , " + format + " , " + quality);
 
 		// encode and save in target directory
 		FileOutputStream stream = new FileOutputStream(path); // overwrites this image every time
@@ -49,12 +42,13 @@ public class EncodeImageFunction implements FREFunction {
 		stream.flush();
 		stream.close();
 
+		Log.i(ShareExtension.TAG, "image " + path + " saved with format: " + format + " and quality: " + quality);
 	} catch (Exception e) {
 		Log.i(ShareExtension.TAG, e.getMessage());
 		e.printStackTrace();
 	}
 
-	return null;
+	  return null;
   }
 
   static Bitmap getBitmap(FREBitmapData bitmapData)
