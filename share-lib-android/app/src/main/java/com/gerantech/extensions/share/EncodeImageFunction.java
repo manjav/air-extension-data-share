@@ -40,7 +40,6 @@ public class EncodeImageFunction implements FREFunction {
 		// encode and save in target directory
 		FileOutputStream stream = new FileOutputStream(path); // overwrites this image every time
 		bmp.compress(format, quality, stream);
-		stream.flush();
 		stream.close();
 
 		Log.i(ShareExtension.TAG, "image " + path + " saved with format: " + format + " and quality: " + quality);

@@ -38,7 +38,6 @@ public class ShareImageFunction implements FREFunction {
 				cachePath.mkdirs(); // don't forget to make the directory
 			FileOutputStream stream = new FileOutputStream(cachePath + "/image.png"); // overwrites this image every time
 			bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-//            stream.flush();
             stream.close();
 
 			File imagePath = new File(activity.getApplicationContext().getCacheDir(), "images");
