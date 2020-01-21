@@ -9,6 +9,7 @@ import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
 
 import java.io.FileOutputStream;
+import java.nio.ByteBuffer;
 
 //The purpose of this class to share the Image and text data through the Applications installed on user device.
 //The passedArgs array in call() contains arguments for user id, subject, text and Image Attachment.
@@ -56,12 +57,27 @@ public class EncodeImageFunction implements FREFunction {
 	  Bitmap bmp = null;
 	  try {
 		  bitmapData.acquire();
-//		  Log.i(ShareExtension.TAG, bitmapData.getWidth()+ " " + bitmapData.getHeight() + " " + bitmapData.getBits());
+
+		  // convert ARGB to ARGB
+		  int len = bitmapData.getWidth() * bitmapData.getHeight();
+		  ByteBuffer buffer = bitmapData.getBits();
+		  ByteBuffer newBuffer = ByteBuffer.allocate(len * 4);
+		  for (int i = 0; i < len; i++) {
+			  byte r = buffer.get();
+			  byte g = buffer.get();
+			  byte b = buffer.get();
+			  newBuffer.put(buffer.get());
+			  newBuffer.put(b);
+			  newBuffer.put(g);
+			  newBuffer.put(r);
+		  }
+		  newBuffer.rewind();
 
 		  // create java bitmap from as3 bitmapData
 		  bmp = Bitmap.createBitmap(bitmapData.getWidth(), bitmapData.getHeight(), Bitmap.Config.ARGB_8888);
-		  bmp.copyPixelsFromBuffer(bitmapData.getBits());
+		  bmp.copyPixelsFromBuffer(newBuffer);
 		  bitmapData.release();
+			
 	  } catch (Exception e) {
 		  e.printStackTrace();
 	  }
