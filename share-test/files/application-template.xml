@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <application xmlns="http://ns.adobe.com/air/application/32.0">
 	<id>__APPID__</id>
 	<name>__APPNAME__</name>
@@ -20,6 +20,31 @@
   <android>
     <manifestAdditions><![CDATA[<manifest android:installLocation="auto">
 
+  <application android:enabled="true" >
+    <meta-data android:name="android.max_aspect" android:value="2.0" />
+    <activity android:excludeFromRecents="false">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+        <category android:name="tv.ouya.intent.category.GAME" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <data android:scheme="__APPCODE__"/>
+      </intent-filter>
+    </activity>
+    <provider
+        android:name="android.support.v4.content.FileProvider"
+        android:authorities="__APPID__.provider"
+        android:exported="false"
+        android:grantUriPermissions="true">
+        <meta-data
+            android:name="android.support.FILE_PROVIDER_PATHS"
+            android:resource="@xml/file_paths" />
+    </provider>
+  </application>
 	<!-- In APP Billing permissions -->
 	<uses-permission android:name="com.domain.market.BILLING" />
 	<uses-permission android:name="android.permission.INTERNET" />
