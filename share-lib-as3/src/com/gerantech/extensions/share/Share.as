@@ -14,9 +14,9 @@ package com.gerantech.extensions.share
 				_instance = new Share();
 			return _instance;
 		}
+		public var isAndroid:Boolean =	Capabilities.version.substr(0, 3).toUpperCase() == "AND";
+		public var isIOS:Boolean =			Capabilities.version.substr(0, 3).toUpperCase() == "IPH";
 		
-		public var isIOS:Boolean = (Capabilities.manufacturer.indexOf("iOS") != -1);
-
 		public function Share()
 		{
 			// Create the instance of the ExtensionContext class if it has not been created yet.
@@ -50,9 +50,10 @@ package com.gerantech.extensions.share
 		
 		public function encode(bitmapData:BitmapData, url:String, compression:Number = 1):void
 		{
-			if( isIOS )
+			if( isAndroid ) {
+				extContext.call("encodeImageFunction", bitmapData, url, compression);
 				return;
-			extContext.call("encodeImageFunction", bitmapData, url, compression);
+			}
 		}
 	}
 }
