@@ -11,6 +11,8 @@ package {
 	import flash.text.TextField;
 	import com.gerantech.extensions.share.Share;
 	import flash.filesystem.File;
+	import flash.net.URLLoader;
+	import flash.display.Bitmap;
 
 	public class Main extends Sprite {
 		private var button_img:Sprite = new Sprite();
@@ -74,8 +76,18 @@ package {
 
 		private function encodeHandler(event:MouseEvent):void
 		{
+			var file:File = File.applicationStorageDirectory.resolvePath("encoded.jpg");
 			Share.instance.showToast("Encoding Image...");
-			Share.instance.encode(this.bitmapData, File.documentsDirectory.resolvePath("encoded.png").nativePath, 1);
+			Share.instance.encode(this.bitmapData, file.nativePath, 0.1);
+
+			var loader:Loader = new Loader();
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onComplete);
+			loader.load(new URLRequest(file.url));
+			function onComplete(event:Event):void {
+				var bmp:Bitmap = event.target.content as Bitmap;
+				bmp.y = 700;
+				addChild(bmp);
+			}
 		}
 	}
 }
