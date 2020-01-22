@@ -36,13 +36,13 @@ public class ShareImageFunction implements FREFunction {
 			File cachePath = new File(activity.getApplicationContext().getCacheDir(), "images");
 			if( !cachePath.exists())
 				cachePath.mkdirs(); // don't forget to make the directory
-			FileOutputStream stream = new FileOutputStream(cachePath + "/image.png"); // overwrites this image every time
+			File image = new File(cachePath, "image.png");
+			FileOutputStream stream = new FileOutputStream(image); // overwrites this image every time
 			bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
             stream.close();
 
-			File imagePath = new File(activity.getApplicationContext().getCacheDir(), "images");
-			Uri uri = android.support.v4.content.FileProvider.getUriForFile(activity.getApplicationContext(), activity.getApplicationContext().getPackageName() + ".provider", new File(imagePath, "image.png"));
-			Log.i(ShareExtension.TAG, uri.getPath() + " saved " + imagePath.exists());
+			Uri uri = android.support.v4.content.FileProvider.getUriForFile(activity.getApplicationContext(), activity.getApplicationContext().getPackageName() + ".provider", image);
+			Log.i(ShareExtension.TAG, uri.getPath() + " saved exists:" + image.exists());
 
 			// Second Argument is for the user ids
 			FREObject user = args[1];
