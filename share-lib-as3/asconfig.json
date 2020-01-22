@@ -7,7 +7,7 @@
 		"source-path": [
 			"src"
 		],
-		"library-path": [],
+		"library-path": ["libs"],
 		"include-sources": [
 			"src"
 		]

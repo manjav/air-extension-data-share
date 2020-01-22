@@ -3,6 +3,10 @@ package com.gerantech.extensions.share
 	import flash.display.BitmapData;
 	import flash.external.ExtensionContext;
 	import flash.system.Capabilities;
+	import flash.filesystem.File;
+	import flash.filesystem.FileStream;
+	import flash.filesystem.FileMode;
+	import flash.utils.ByteArray;
 
 	public class Share
 	{
@@ -16,7 +20,7 @@ package com.gerantech.extensions.share
 		}
 		public var isAndroid:Boolean =	Capabilities.version.substr(0, 3).toUpperCase() == "AND";
 		public var isIOS:Boolean =			Capabilities.version.substr(0, 3).toUpperCase() == "IPH";
-		
+
 		public function Share()
 		{
 			// Create the instance of the ExtensionContext class if it has not been created yet.
@@ -54,6 +58,13 @@ package com.gerantech.extensions.share
 				extContext.call("encodeImageFunction", bitmapData, url, compression);
 				return;
 			}
+			
+			var bytes:ByteArray = PNGEncoder2.encode(bitmapData);
+			var file:File = new	File(url);
+			var fileStream:FileStream = new FileStream();
+			fileStream.open(file, FileMode.WRITE);
+			fileStream.writeBytes(bytes, 0, bytes.length);
+			fileStream.close();
 		}
 	}
 }
