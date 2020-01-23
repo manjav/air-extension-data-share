@@ -23,6 +23,39 @@ If you are targeting Android, add the Android Support extension from [this repos
 </extensions>
 ```
 
+
+## API Overview
+
+### Show Toast
+Show toast with text and duration params
+duration 0 is short, 1 is medium and 2 is long 
+
+```as3
+Share.instance.showToast("Show Message...", 1);
+```
+
+### Send SMS
+Send SMS in default native sending app on your device.
+
+```as3
+Share.instance.sendMessage("Heyy, How are you?", "+989121778856");
+```
+
+### Share Text
+Your text can be contains url and etc. idadadadadadadIdaf you choice email organization apps, receivers field auto filled.
+
+```as3
+var emails:String = "mansurjavadi@gmail.com, fudosakurai@gmail.com";
+Share.instance.sendText("Your Feedback is Valuable to us", "Write something here..", emails);
+```
+
+### Share Image
+If you choice email organization apps, your image attached.
+
+```as3
+var emails:String = "mansurjavadi@gmail.com, fudosakurai@gmail.com";
+Share.instance.shareImage(this.bitmapData, "Sharing some doc", "Please find the attachment", emails);
+```
 Furthermore, modify `manifestAdditions` element so that it contains the following `provider` element:
 
 ```xml
@@ -71,30 +104,3 @@ Add the following key-value pairs to your `InfoAdditions` to avoid crashes on iO
     ]]></InfoAdditions>
 </iPhone>
 ```
-
-## API Overview
-
-### Show Toast
-Show toast with text and duration params
-duration 0 is short, 1 is medium and 2 in long 
-
-```as3
-Share.instance.showToast("Show Message...", 1);
-```
-
-### Send SMS
-Send SMS in default native sending app on your device.
-
-```as3
-Share.instance.sendMessage("Heyy, How are you?", "+989121778856");
-```
-
-### Share Text
-Your text can be contains url and etc. if you choice email organization apps, receivers field auto filled.
-
-```as3
-var emails:String = "mansurjavadi@gmail.com, fudosakurai@gmail.com";
-Share.instance.sendText("Your Feedback is Valuable to us", "Write something here..", emails);
-```
-
-
