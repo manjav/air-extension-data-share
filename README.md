@@ -82,4 +82,19 @@ duration 0 is short, 1 is medium and 2 in long
 Share.instance.showToast("Show Message...", 1);
 ```
 
+### Send SMS
+Send SMS in default native sending app on your device.
+
+```as3
+Share.instance.sendMessage("Heyy, How are you?", "+989121778856");
+```
+
+### Share Text
+Your text can be contains url and etc. if you choice email organization apps, receivers field auto filled.
+
+```as3
+var emails:String = "mansurjavadi@gmail.com, fudosakurai@gmail.com";
+Share.instance.sendText("Your Feedback is Valuable to us", "Write something here..", emails);
+```
+
 
