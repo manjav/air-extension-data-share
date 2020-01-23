@@ -74,3 +74,12 @@ Add the following key-value pairs to your `InfoAdditions` to avoid crashes on iO
 
 ## API Overview
 
+### Show Toast
+Show toast with text and duration params
+duration 0 is short, 1 is medium and 2 in long 
+
+```as3
+Share.instance.showToast("Show Message...", 1);
+```
+
+
