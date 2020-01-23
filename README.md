@@ -104,3 +104,10 @@ Add the following key-value pairs to your `InfoAdditions` to avoid crashes on iO
     ]]></InfoAdditions>
 </iPhone>
 ```
+
+### Encode Image
+Encode your BitmapData to png, jpeg or webp format image and save in your path with comperession level(default is 1).  
+
+```as3
+Share.instance.encode(this.bitmapData, "../yourpath/image.jpg", 0.1);
+```
