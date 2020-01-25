@@ -1,13 +1,12 @@
-package com.gerantech.extensions.share;
+package com.gerantech.extensions.share.functions;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
 import com.adobe.fre.FREContext;
-import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
+import com.gerantech.extensions.share.ShareExtension;
 
 //The purpose of this class is to send messages to any contact number.
 

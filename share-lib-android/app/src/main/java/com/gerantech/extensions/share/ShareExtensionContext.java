@@ -7,6 +7,11 @@ import android.util.Log;
 
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
+import com.gerantech.extensions.share.functions.EncodeImageFunction;
+import com.gerantech.extensions.share.functions.SendMessageFunction;
+import com.gerantech.extensions.share.functions.ShareImageFunction;
+import com.gerantech.extensions.share.functions.ShareTextFunction;
+import com.gerantech.extensions.share.functions.ShowToastFunction;
 
 public class ShareExtensionContext extends FREContext {
 

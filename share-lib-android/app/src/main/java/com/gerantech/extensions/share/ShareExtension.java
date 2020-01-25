@@ -21,7 +21,7 @@ import com.adobe.fre.FREExtension;
  */
 public class ShareExtension implements FREExtension {
 
-	static final String TAG = "share-ane";
+	static public final String TAG = "share-ane";
 	// createContext() creates and returns an FREContext object.
 	public FREContext createContext(String extId) {
 		Log.i(TAG, "createContext");

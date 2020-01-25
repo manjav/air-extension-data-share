@@ -1,4 +1,4 @@
-package com.gerantech.extensions.share;
+package com.gerantech.extensions.share.functions;
 
 import android.app.Activity;
 import android.util.Log;
@@ -7,6 +7,8 @@ import android.widget.Toast;
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
+import com.gerantech.extensions.share.ShareExtension;
+import com.gerantech.extensions.share.ShareExtensionContext;
 
 //The purpose of this class to show message toast on Android device screen.
 

@@ -1,12 +1,10 @@
-package com.gerantech.extensions.share;
+package com.gerantech.extensions.share.functions;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.util.Log;
 
 import com.adobe.fre.FREContext;
-import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
+import com.gerantech.extensions.share.ShareExtension;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,15 +1,13 @@
-package com.gerantech.extensions.share;
+package com.gerantech.extensions.share.functions;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 
 import com.adobe.fre.FREBitmapData;
 import com.adobe.fre.FREContext;
-import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
+import com.gerantech.extensions.share.ShareExtension;
 
 import java.io.File;
 import java.io.FileOutputStream;

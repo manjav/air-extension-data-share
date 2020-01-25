@@ -1,4 +1,4 @@
-package com.gerantech.extensions.share;
+package com.gerantech.extensions.share.functions;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -9,8 +9,8 @@ import android.util.Log;
 
 import com.adobe.fre.FREBitmapData;
 import com.adobe.fre.FREContext;
-import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
+import com.gerantech.extensions.share.ShareExtension;
 
 import java.io.FileOutputStream;
 
@@ -84,5 +84,4 @@ public class EncodeImageFunction implements FREFunction {
 	  }
 	  return bitmap;
   }
-
 }
