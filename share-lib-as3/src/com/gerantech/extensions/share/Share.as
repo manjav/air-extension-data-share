@@ -46,14 +46,14 @@ package com.gerantech.extensions.share
 				extContext.call("sendMessageFunction", phoneNumber, message);
 		}
 
-		public function sendText(subject:String = "", text:String = "", userId:String = ""):void
+		public function sendText(subject:String = "", text:String = "", userId:String = "", packageTarget:String = null):void
 		{
-			extContext.call("shareTextFunction", userId, subject, text);
+			extContext.call("shareTextFunction", userId, subject, text, packageTarget);
 		}
 
-		public function shareImage(bitmap:BitmapData, subject:String = "", text:String = "", userId:String = ""):void
+		public function shareImage(bitmap:BitmapData, subject:String = "", text:String = "", userId:String = "", packageTarget:String = null):void
 		{
-			extContext.call("shareImageFunction", bitmap, userId, subject, text);
+			extContext.call("shareImageFunction", bitmap, userId, subject, text, packageTarget);
 		}
 		
 		public function encode(bitmapData:BitmapData, url:String, compression:Number = 1):void
