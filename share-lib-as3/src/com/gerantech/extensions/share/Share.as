@@ -7,8 +7,11 @@ package com.gerantech.extensions.share
 	import flash.filesystem.FileStream;
 	import flash.filesystem.FileMode;
 	import flash.utils.ByteArray;
+	import flash.events.EventDispatcher;
+	import flash.events.StatusEvent;
+	import flash.events.Event;
 
-	public class Share
+	public class Share extends EventDispatcher
 	{
 		static private var _instance:Share;
 		static private var extContext:ExtensionContext = null;
@@ -27,6 +30,7 @@ package com.gerantech.extensions.share
 			// The extension context's context type is NULL, because this extension
 			// has only one context type.
 			extContext = ExtensionContext.createExtensionContext("com.gerantech.extensions.share", null);
+			extContext.addEventListener(StatusEvent.STATUS, context_statusHAndler);
 		}
 
 		public function showToast(message:String, duration:int = 2):void
@@ -65,6 +69,12 @@ package com.gerantech.extensions.share
 			fileStream.open(file, FileMode.WRITE);
 			fileStream.writeBytes(bytes, 0, bytes.length);
 			fileStream.close();
+		}
+
+		private function context_statusHAndler( event:StatusEvent ):void 
+		{
+			this.dispatchEvent( new Event(event.code, false, false ) );
+			trace(event.code, event.level);
 		}
 	}
 }
