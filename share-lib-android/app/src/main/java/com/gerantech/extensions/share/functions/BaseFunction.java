@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
+import com.adobe.air.AndroidActivityWrapper;
+import com.adobe.air.IShareResultCallback;
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREFunction;
 import com.adobe.fre.FREObject;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 class BaseFunction implements FREFunction, IShareResultCallback {
     Activity activity;
     private ShareExtensionContext context;
+    static final int SHARING_REQUEST_CODE = 1361;
 
     @Override
     public FREObject call(FREContext context, FREObject[] args) {
@@ -28,6 +31,12 @@ class BaseFunction implements FREFunction, IShareResultCallback {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         Log.i(ShareExtension.TAG, "requestCode: " + requestCode + " resultCode: " + resultCode + " intent: " + intent);
         if (requestCode != SHARING_REQUEST_CODE)
+            return;
+
+         AndroidActivityWrapper.GetAndroidActivityWrapper().removeActivityResultListener(this);
+        // Dispatch event, it may be 'cancel' even if the operation succeeded
+        String eventName = (resultCode == Activity.RESULT_OK) ? "complete" : "cancel";
+        context.dispatchStatusEventAsync(eventName, "");
     }
 
     // Function to launch intent to Share data
@@ -45,10 +54,13 @@ class BaseFunction implements FREFunction, IShareResultCallback {
                 share.setType("image/*");
                 share.putExtra(Intent.EXTRA_STREAM, uri); // get image path from sdcard
             }
-            activity.startActivity(Intent.createChooser(share, subject));
+            AndroidActivityWrapper.GetAndroidActivityWrapper().addActivityResultListener(this);
+            activity.startActivityForResult(Intent.createChooser(share, subject), SHARING_REQUEST_CODE);
+            context.dispatchStatusEventAsync("init", "");
         } catch (Exception e) {
 //            Log.i(ShareExtension.TAG, e.getLocalizedMessage());
             e.printStackTrace();
-    }
+            context.dispatchStatusEventAsync("close", e.getLocalizedMessage());
+        }
     }
 }
