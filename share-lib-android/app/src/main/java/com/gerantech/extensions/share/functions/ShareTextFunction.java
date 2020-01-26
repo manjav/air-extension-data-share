@@ -11,34 +11,22 @@ import java.util.Collections;
 
 //The purpose of this class to share text data through the Apps installed on user device.
 
-//The passedArgs array in call() contains arguments for userids, subject, text.
-public class ShareTextFunction implements FREFunction {
-
-	Activity activity;
-
+//The args array in call() contains arguments for userids, subject, text.
+public class ShareTextFunction extends BaseFunction {
 	@Override
-	public FREObject call(FREContext context, FREObject[] passedArgs) {
-
-		ShareExtensionContext ExtContext = (ShareExtensionContext) context;
-		activity = ExtContext.getActivity();
-
+	public FREObject call(FREContext context, FREObject[] args) {
+		super.call(context, args);
 		try {
-
 			// First Argument is for the user ids
-			FREObject user = passedArgs[0];
-			String userId = user.getAsString();
+			String userId = args[0].getAsString();
 			ArrayList<String> idList = new ArrayList<String>();
 			Collections.addAll(idList, userId.split(","));
 
 			// Second Argument is for the Subject parameter
-			FREObject sub = passedArgs[1];
-			String subject = sub.getAsString();
+			String subject = args[1].getAsString();
 
 			// Third Argument is for the Body text
-			FREObject txt = passedArgs[2];
-			String data = txt.getAsString();
-
-			shareText(idList, subject, data);
+			String data = args[2].getAsString();
 
 		} catch (Exception e) {
 			Log.i(ShareExtension.TAG, e.getMessage());

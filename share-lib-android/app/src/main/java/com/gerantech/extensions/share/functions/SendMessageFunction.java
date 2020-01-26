@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
+import com.adobe.air.AndroidActivityWrapper;
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREObject;
 import com.gerantech.extensions.share.ShareExtension;
@@ -11,24 +12,18 @@ import com.gerantech.extensions.share.ShareExtension;
 //The purpose of this class is to send messages to any contact number.
 
 //The passedArgs array in call() contains two argument: Number and the Message to send.
-public class SendMessageFunction implements FREFunction {
-
-	Activity activity;
+public class SendMessageFunction extends BaseFunction {
 
 	@Override
-	public FREObject call(FREContext context, FREObject[] passedArgs) {
-
-		ShareExtensionContext ExtContext = (ShareExtensionContext) context;
-		activity = ExtContext.getActivity();
+	public FREObject call(FREContext context, FREObject[] args) {
+		super.call(context, args);
 
 		try {
 			// First Argument is for the number
-			FREObject numberObject = passedArgs[0];
-			String phoneNumber = numberObject.getAsString();
+			String phoneNumber = args[0].getAsString();
 
 			// Second Argument is for message
-			FREObject msgObject = passedArgs[1];
-			String message = msgObject.getAsString();
+			String message = args[1].getAsString();
 
 			sendMessage(phoneNumber, message);
 		} catch (Exception e) {

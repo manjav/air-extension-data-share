@@ -15,16 +15,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 //The purpose of this class to share the Image and text data through the Applications installed on user device.
-//The passedArgs array in call() contains arguments for user id, subject, text and Image Attachment.
-public class ShareImageFunction implements FREFunction {
-
-  Activity activity;
+//The args array in call() contains arguments for user id, subject, text and Image Attachment.
+public class ShareImageFunction extends BaseFunction {
 
   @Override
 	public FREObject call(FREContext context, FREObject[] args) {
-
-		ShareExtensionContext ExtContext = (ShareExtensionContext) context;
-		activity = ExtContext.getActivity();
+	  super.call(context, args);
 
 		try {
 			Bitmap bmp = EncodeImageFunction.getBitmap((FREBitmapData) args[0]);

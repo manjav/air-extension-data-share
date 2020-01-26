@@ -15,12 +15,12 @@ import com.gerantech.extensions.share.ShareExtension;
 import java.io.FileOutputStream;
 
 //The purpose of this class to share the Image and text data through the Applications installed on user device.
-//The passedArgs array in call() contains arguments for user id, subject, text and Image Attachment.
-public class EncodeImageFunction implements FREFunction {
+//The args array in call() contains arguments for user id, subject, text and Image Attachment.
+public class EncodeImageFunction extends BaseFunction {
 
   @Override
   public FREObject call(FREContext context, FREObject[] args) {
-
+	super.call(context, args);
 	try {
 		// create bitmap from bitmapData
 		Bitmap bmp = EncodeImageFunction.getBitmap((FREBitmapData) args[0]);
