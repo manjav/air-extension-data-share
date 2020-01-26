@@ -28,25 +28,11 @@ public class ShareTextFunction extends BaseFunction {
 			// Third Argument is for the Body text
 			String data = args[2].getAsString();
 
+			share(idList, subject, data, null);
 		} catch (Exception e) {
 			Log.i(ShareExtension.TAG, e.getMessage());
 			e.printStackTrace();
 		}
 		return null;
 	}
-
-	// Function to launch intent to Share text data
-	private void shareText(ArrayList<String> id, String subject, String text) {
-
-		Intent share = new Intent(android.content.Intent.ACTION_SEND);
-		share.setType("text/plain");
-		String[] userIdList = id.toArray(new String[id.size()]);
-		share.putExtra(Intent.EXTRA_EMAIL, userIdList); // get string array
-														// contains user ids
-		share.putExtra(Intent.EXTRA_SUBJECT, subject); // get subject
-		share.putExtra(Intent.EXTRA_TEXT, text); // get text to show on mail
-													// body
-		activity.startActivity(Intent.createChooser(share, "Share Message!!!"));
-	}
-
 }

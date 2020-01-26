@@ -50,26 +50,11 @@ public class ShareImageFunction extends BaseFunction {
 			// Fourth Argument is for the Body text
 			String data = args[3].getAsString();
 
-			shareImage(idList, subject, data, uri);
+			share(idList, subject, data, uri);
 		} catch (Exception e) {
 			Log.i(ShareExtension.TAG, e.getMessage());
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	// Function to launch intent to share image
-	private void shareImage(ArrayList<String> id, String subject, String text, Uri uri) {
-
-		Intent share = new Intent(Intent.ACTION_SEND);
-		share.setType("image/*");
-		String[] userIdList = id.toArray(new String[id.size()]);
-		share.putExtra(Intent.EXTRA_STREAM, uri); // get image path from sdcard
-		share.putExtra(Intent.EXTRA_EMAIL, userIdList); // get string array
-		
-		share.putExtra(Intent.EXTRA_SUBJECT, subject); // get subject
-		share.putExtra(Intent.EXTRA_TEXT, text); // get text to show on mail
-
-		activity.startActivity(Intent.createChooser(share, "Share Image!!!"));
 	}
 }

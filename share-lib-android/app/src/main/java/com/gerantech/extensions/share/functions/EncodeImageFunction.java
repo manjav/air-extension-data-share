@@ -52,7 +52,7 @@ public class EncodeImageFunction extends BaseFunction {
 	}
 
 	return null;
-  }
+	}
 
 	private static final float[] mBGRToRGBColorTransform =
 	{
@@ -66,7 +66,7 @@ public class EncodeImageFunction extends BaseFunction {
 	);
 
 	static Bitmap getBitmap(FREBitmapData bitmapData)
-  {
+    {
 	  Bitmap bitmap = null;
 	  try {
 		  bitmapData.acquire();
@@ -83,5 +83,5 @@ public class EncodeImageFunction extends BaseFunction {
 		  e.printStackTrace();
 	  }
 	  return bitmap;
-  }
+    }
 }
