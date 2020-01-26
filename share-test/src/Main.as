@@ -65,12 +65,20 @@ package {
 		{
 			Share.instance.showToast("Please share some Feedback to us...");
 			var emails:String = "adobeairnoida@gmail.com,test@gmail.com";
+			Share.instance.addEventListener(Event.INIT, share_eventsHandler);
+			Share.instance.addEventListener(Event.CLOSE, share_eventsHandler);
+			Share.instance.addEventListener(Event.CANCEL, share_eventsHandler);
+			Share.instance.addEventListener(Event.COMPLETE, share_eventsHandler);
 			Share.instance.sendText("Your Feedback is Valuable to us", "Write something here..", emails);
 		}
 
 		private function imageHandler(event:MouseEvent):void {
 			Share.instance.showToast("Sending Image...");
 			var emails:String = "adobeairnoida@gmail.com,test@gmail.com";
+			Share.instance.addEventListener(Event.INIT, share_eventsHandler);
+			Share.instance.addEventListener(Event.CLOSE, share_eventsHandler);
+			Share.instance.addEventListener(Event.CANCEL, share_eventsHandler);
+			Share.instance.addEventListener(Event.COMPLETE, share_eventsHandler);
 			Share.instance.shareImage(this.bitmapData, "Sharing some doc", "Please find the attachment", emails);
 		}
 
@@ -88,6 +96,15 @@ package {
 				bmp.y = 700;
 				addChild(bmp);
 			}
+		}
+
+		private function share_eventsHandler(event:Event):void
+		{
+			Share.instance.removeEventListener(Event.INIT, share_eventsHandler);
+			Share.instance.removeEventListener(Event.CLOSE, share_eventsHandler);
+			Share.instance.removeEventListener(Event.CANCEL, share_eventsHandler);
+			Share.instance.removeEventListener(Event.COMPLETE, share_eventsHandler);
+			Share.instance.showToast("Share process :  " + event.type);
 		}
 	}
 }
