@@ -42,7 +42,6 @@ package {
 			Share.instance.addEventListener(Event.CLOSE, share_eventsHandler);
 			Share.instance.addEventListener(Event.CANCEL, share_eventsHandler);
 			Share.instance.addEventListener(Event.COMPLETE, share_eventsHandler);
-
 		}
 
 		private function addButton(label:String, x:Number, y:Number, handler:Function):void {

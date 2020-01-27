@@ -35,44 +35,50 @@ package com.gerantech.extensions.share
 
 		public function showToast(message:String, duration:int = 2):void
 		{
-			if( isAndroid || isIOS )
-				extContext.call("showToastFunction", message, duration);
+			if( Capabilities.manufacturer == "Adobe Windows" )
+				return;
+			extContext.call("showToastFunction", message, duration);
 		}
 
 		public function sendMessage(message:String = "", phoneNumber:String = ""):void
 		{
+			if( Capabilities.manufacturer == "Adobe Windows" )
+				return;
 			if(isIOS)
 				extContext.call("shareTextFunction", phoneNumber, "", message);
-			else if( isAndroid )
+			else
 				extContext.call("sendMessageFunction", phoneNumber, message);
 		}
 
 		public function sendText(subject:String = "", text:String = "", userId:String = "", packageTarget:String = null):void
 		{
-			if( isAndroid || isIOS )
-				extContext.call("shareTextFunction", userId, subject, text, packageTarget);
+			if( Capabilities.manufacturer == "Adobe Windows" )
+				return;
+			extContext.call("shareTextFunction", userId, subject, text, packageTarget);
 		}
 
 		public function shareImage(bitmap:BitmapData, subject:String = "", text:String = "", userId:String = "", packageTarget:String = null):void
 		{
-			if( isAndroid || isIOS )
-				extContext.call("shareImageFunction", bitmap, userId, subject, text, packageTarget);
+			if( Capabilities.manufacturer == "Adobe Windows" )
+				return;
+			extContext.call("shareImageFunction", bitmap, userId, subject, text, packageTarget);
 		}
 		
 		public function encode(bitmapData:BitmapData, url:String, compression:Number = 1):void
 		{
-			if( isAndroid ) {
-				extContext.call("encodeImageFunction", bitmapData, url, compression);
+			// for other platforms
+			if( Capabilities.manufacturer == "Adobe Windows" || isIOS )
+			{
+				var bytes:ByteArray = PNGEncoder2.encode(bitmapData);
+				var file:File = new	File(url);
+				var fileStream:FileStream = new FileStream();
+				fileStream.open(file, FileMode.WRITE);
+				fileStream.writeBytes(bytes, 0, bytes.length);
+				fileStream.close();
 				return;
 			}
 			
-			// for other platforms
-			var bytes:ByteArray = PNGEncoder2.encode(bitmapData);
-			var file:File = new	File(url);
-			var fileStream:FileStream = new FileStream();
-			fileStream.open(file, FileMode.WRITE);
-			fileStream.writeBytes(bytes, 0, bytes.length);
-			fileStream.close();
+			extContext.call("encodeImageFunction", bitmapData, url, compression);
 		}
 
 		private function context_statusHAndler( event:StatusEvent ):void 
