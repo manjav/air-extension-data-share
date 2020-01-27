@@ -11,7 +11,7 @@
       // "profile": "mobileDevice",
       "screensize": "480x800:480x800",
       "screenDPI": 326,
-      "versionPlatform": "AND",
+      "versionPlatform": "WIN",
       "extdir": "bin/.as3mxml-unpackaged-anes"
     },
     {
