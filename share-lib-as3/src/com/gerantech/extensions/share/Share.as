@@ -35,25 +35,28 @@ package com.gerantech.extensions.share
 
 		public function showToast(message:String, duration:int = 2):void
 		{
-			extContext.call("showToastFunction", message, duration);
+			if( isAndroid || isIOS )
+				extContext.call("showToastFunction", message, duration);
 		}
 
 		public function sendMessage(message:String = "", phoneNumber:String = ""):void
 		{
 			if(isIOS)
 				extContext.call("shareTextFunction", phoneNumber, "", message);
-			else
+			else if( isAndroid )
 				extContext.call("sendMessageFunction", phoneNumber, message);
 		}
 
 		public function sendText(subject:String = "", text:String = "", userId:String = "", packageTarget:String = null):void
 		{
-			extContext.call("shareTextFunction", userId, subject, text, packageTarget);
+			if( isAndroid || isIOS )
+				extContext.call("shareTextFunction", userId, subject, text, packageTarget);
 		}
 
 		public function shareImage(bitmap:BitmapData, subject:String = "", text:String = "", userId:String = "", packageTarget:String = null):void
 		{
-			extContext.call("shareImageFunction", bitmap, userId, subject, text, packageTarget);
+			if( isAndroid || isIOS )
+				extContext.call("shareImageFunction", bitmap, userId, subject, text, packageTarget);
 		}
 		
 		public function encode(bitmapData:BitmapData, url:String, compression:Number = 1):void
@@ -63,6 +66,7 @@ package com.gerantech.extensions.share
 				return;
 			}
 			
+			// for other platforms
 			var bytes:ByteArray = PNGEncoder2.encode(bitmapData);
 			var file:File = new	File(url);
 			var fileStream:FileStream = new FileStream();
@@ -74,7 +78,6 @@ package com.gerantech.extensions.share
 		private function context_statusHAndler( event:StatusEvent ):void 
 		{
 			this.dispatchEvent( new Event(event.code, false, false ) );
-			trace(event.code, event.level);
 		}
 	}
 }
