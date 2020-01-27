@@ -40,9 +40,12 @@ class BaseFunction implements FREFunction, IShareResultCallback {
     }
 
     // Function to launch intent to Share data
-    void share(ArrayList<String> id, String subject, String text, Uri uri) {
+    void share(ArrayList<String> id, String subject, String text, Uri uri, String servicePackage) {
         try {
             Intent share = new Intent(Intent.ACTION_SEND);
+            // select shring service
+            if( servicePackage != null )
+                share.setPackage(servicePackage);
             // contains user ids
             share.putExtra(Intent.EXTRA_EMAIL, id.toArray(new String[id.size()])); // get string array
             share.putExtra(Intent.EXTRA_SUBJECT, subject); // get subject

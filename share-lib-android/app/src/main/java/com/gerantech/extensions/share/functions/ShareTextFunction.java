@@ -28,7 +28,10 @@ public class ShareTextFunction extends BaseFunction {
 			// Third Argument is for the Body text
 			String data = args[2].getAsString();
 
-			share(idList, subject, data, null);
+			// Fifth Argument is service package
+			String servicePackage = args[3].getAsString();
+
+			share(idList, subject, data, null, servicePackage);
 		} catch (Exception e) {
 			Log.i(ShareExtension.TAG, e.getMessage());
 			e.printStackTrace();

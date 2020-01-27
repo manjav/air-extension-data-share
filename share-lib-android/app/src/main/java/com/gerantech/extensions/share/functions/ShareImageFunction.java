@@ -50,7 +50,10 @@ public class ShareImageFunction extends BaseFunction {
 			// Fourth Argument is for the Body text
 			String data = args[3].getAsString();
 
-			share(idList, subject, data, uri);
+			// Fifth Argument is service package
+			String servicePackage = args[4].getAsString();
+
+			share(idList, subject, data, uri, servicePackage);
 		} catch (Exception e) {
 			Log.i(ShareExtension.TAG, e.getMessage());
 			e.printStackTrace();
