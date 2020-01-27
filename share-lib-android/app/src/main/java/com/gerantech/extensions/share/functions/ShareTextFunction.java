@@ -29,7 +29,7 @@ public class ShareTextFunction extends BaseFunction {
 			String data = args[2].getAsString();
 
 			// Fifth Argument is service package
-			String servicePackage = args[3].getAsString();
+			String servicePackage = args[3] == null ? null : args[3].getAsString();
 
 			share(idList, subject, data, null, servicePackage);
 		} catch (Exception e) {

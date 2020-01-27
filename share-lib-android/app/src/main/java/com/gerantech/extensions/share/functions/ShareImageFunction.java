@@ -51,7 +51,7 @@ public class ShareImageFunction extends BaseFunction {
 			String data = args[3].getAsString();
 
 			// Fifth Argument is service package
-			String servicePackage = args[4].getAsString();
+			String servicePackage = args[4] == null ? null : args[4].getAsString();
 
 			share(idList, subject, data, uri, servicePackage);
 		} catch (Exception e) {
