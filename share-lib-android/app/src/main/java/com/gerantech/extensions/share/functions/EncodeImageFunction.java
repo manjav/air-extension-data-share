@@ -8,11 +8,15 @@ import android.graphics.Paint;
 import android.util.Log;
 
 import com.adobe.fre.FREBitmapData;
+import com.adobe.fre.FREByteArray;
 import com.adobe.fre.FREContext;
 import com.adobe.fre.FREObject;
 import com.gerantech.extensions.share.ShareExtension;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.nio.ByteBuffer;
 
 //The purpose of this class to share the Image and text data through the Applications installed on user device.
 //The args array in call() contains arguments for user id, subject, text and Image Attachment.
@@ -21,29 +25,49 @@ public class EncodeImageFunction extends BaseFunction {
   @Override
   public FREObject call(FREContext context, FREObject[] args) {
 	super.call(context, args);
+	FREByteArray ret = null;
 	try {
 		// create bitmap from bitmapData
 		Bitmap bmp = EncodeImageFunction.getBitmap((FREBitmapData) args[0]);
 		Log.i(ShareExtension.TAG, bmp.getWidth()+ " : " + bmp.getHeight());
 
 		// define image format
-		String path = args[1].getAsString();
-		int quality = (int) Math.floor(args[2].getAsDouble() * 100);
+		String path = null;
+		int quality = (int) Math.floor(args[1].getAsDouble() * 100);
 		Bitmap.CompressFormat format = Bitmap.CompressFormat.PNG;
-		int dotIndex = path.lastIndexOf('.');
-		if( dotIndex > -1) {
-		  String ext = path.substring(dotIndex + 1).toLowerCase();
-		  if (ext.equals("jpg") || ext.equals("jpeg"))
-			format = Bitmap.CompressFormat.JPEG;
-		  else if (ext.equals("webp"))
-			format = Bitmap.CompressFormat.JPEG;
+		if( args[2] != null )
+		{
+			path = args[2].getAsString();
+			int dotIndex = path.lastIndexOf('.');
+			if( dotIndex > -1) {
+				String ext = path.substring(dotIndex + 1).toLowerCase();
+				if (ext.equals("jpg") || ext.equals("jpeg"))
+					format = Bitmap.CompressFormat.JPEG;
+				else if (ext.equals("webp"))
+					format = Bitmap.CompressFormat.JPEG;
+			}
 		}
 
-
 		// encode and save in target directory
-		FileOutputStream stream = new FileOutputStream(path); // overwrites this image every time
+		ByteArrayOutputStream stream = new ByteArrayOutputStream(); // overwrites this image every time
 		bmp.compress(format, quality, stream);
+		byte[] bytes = stream.toByteArray();
 		stream.close();
+
+		// fill FREByteArray
+		ret = FREByteArray.newByteArray();
+		ret.setProperty("length", FREObject.newObject(bytes.length));
+		ret.acquire();
+		ByteBuffer buffer = ret.getBytes();
+		buffer.put(bytes, 0, bytes.length);
+		ret.release();
+
+		if( path != null )
+		{
+			FileOutputStream fos = new FileOutputStream(path);
+			fos.write(bytes);
+			fos.close();
+		}
 
 		Log.i(ShareExtension.TAG, "image " + path + " saved with format: " + format + " and quality: " + quality);
 	} catch (Exception e) {
@@ -51,7 +75,7 @@ public class EncodeImageFunction extends BaseFunction {
 		e.printStackTrace();
 	}
 
-	return null;
+	return ret;
 	}
 
 	private static final float[] mBGRToRGBColorTransform =

@@ -64,21 +64,24 @@ package com.gerantech.extensions.share
 			extContext.call("shareImageFunction", bitmap, userId, subject, text, packageTarget);
 		}
 		
-		public function encode(bitmapData:BitmapData, url:String, compression:Number = 1):void
+		public function encode(bitmapData:BitmapData, compression:Number = 1, url:String = null):ByteArray
 		{
 			// for other platforms
 			if( Capabilities.manufacturer == "Adobe Windows" || isIOS )
 			{
 				var bytes:ByteArray = PNGEncoder2.encode(bitmapData);
-				var file:File = new	File(url);
-				var fileStream:FileStream = new FileStream();
-				fileStream.open(file, FileMode.WRITE);
-				fileStream.writeBytes(bytes, 0, bytes.length);
-				fileStream.close();
-				return;
+				if( url != null)
+				{
+					var file:File = new	File(url);
+					var fileStream:FileStream = new FileStream();
+					fileStream.open(file, FileMode.WRITE);
+					fileStream.writeBytes(bytes, 0, bytes.length);
+					fileStream.close();
+				}
+				return bytes;
 			}
 			
-			extContext.call("encodeImageFunction", bitmapData, url, compression);
+			return extContext.call("encodeImageFunction", bitmapData, compression, url) as ByteArray;
 		}
 
 		private function context_statusHAndler( event:StatusEvent ):void 

@@ -2,7 +2,6 @@ package {
 
 	import com.gerantech.extensions.share.Share;
 
-	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Loader;
 	import flash.display.Sprite;
@@ -13,6 +12,7 @@ package {
 	import flash.filesystem.File;
 	import flash.net.URLRequest;
 	import flash.text.TextField;
+	import flash.utils.ByteArray;
 
 	public class Main extends Sprite {
 		private var button_img:Sprite = new Sprite();
@@ -81,18 +81,22 @@ package {
 
 		private function encodeHandler(event:MouseEvent):void
 		{
+			Share.instance.showToast("Encoding Image... ");
 			var file:File = File.applicationStorageDirectory.resolvePath("encoded.jpg");
-			Share.instance.showToast("Encoding Image...");
-			Share.instance.encode(this.bitmapData, file.nativePath, 0.1);
+			var bytes:ByteArray = Share.instance.encode(this.bitmapData, 0.1, file.nativePath);
 
-			var loader:Loader = new Loader();
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onComplete);
-			loader.load(new URLRequest(file.url));
-			function onComplete(event:Event):void {
-				var bmp:Bitmap = event.target.content as Bitmap;
-				bmp.y = 700;
-				addChild(bmp);
-			}
+			var byteLoader:Loader = new Loader();
+			byteLoader.scaleX = byteLoader.scaleY = 0.5;
+			byteLoader.y = 600;
+			byteLoader.loadBytes(bytes);
+			addChild(byteLoader);
+
+			var urlLoader:Loader = new Loader();
+			urlLoader.scaleX = urlLoader.scaleY = 0.5;
+			urlLoader.x = 300;
+			urlLoader.y = 600;
+			urlLoader.load(new URLRequest(file.url));
+			addChild(urlLoader);
 		}
 
 		private function share_eventsHandler(event:Event):void
